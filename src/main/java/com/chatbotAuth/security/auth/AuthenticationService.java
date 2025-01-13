@@ -52,8 +52,12 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+
+        // Return the response with firstname, lastname, email, and accessToken
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
+                .firstname(user.getFirstname())  // Include the firstname
+                .lastname(user.getLastname())    // Include the lastname
                 .build();
     }
 
